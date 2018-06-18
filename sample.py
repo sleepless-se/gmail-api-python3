@@ -18,17 +18,17 @@ if __name__ == "__main__":
     #Show unread message list
     maillist = api.getMailList(user, query )
     print("---Show unread message list as id and threadId---")
-    # print( json.dumps(maillist, indent=4))
+    print( json.dumps(maillist, indent=4))
 
     #show row mail contents
     content = api.getMailContent(user, maillist["messages"][0]['id']) # [0]<-select message from message list
     print("---Show mail row contents---")
-    # print( json.dumps(content, indent=4))
+    print( json.dumps(content, indent=4))
 
-    # readTitle(content)
-    # print("---Title---")
-    # title = readTitle(content)
-    # print(title)
+    readTitle(content)
+    print("---Title---")
+    title = readTitle(content)
+    print(title)
     print("---Body---")
     body = readMessage(content)
     print(body)
