@@ -224,11 +224,17 @@ def data_encoder(text):
         message = email.message_from_string(message)
     return message
 
-def readMessage(content):
+
+def readMessage(content)->str:
     message = None
     if "data" in content['payload']['body']:
         message = content['payload']['body']['data']
         message = data_encoder(message)
+    elif "data" in content['payload']['parts'][0]['body']:
+        message = content['payload']['parts'][0]['body']['data']
+        message = data_encoder(message)
+    else:
+        print("body has no data.")
     return message
 
 def readSnippet(content):
