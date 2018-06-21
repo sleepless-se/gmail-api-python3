@@ -221,7 +221,6 @@ def data_encoder(text):
         message = base64.urlsafe_b64decode(text)
         message = str(message, 'utf-8')
         # message = quopri.decodestring(message).decode('utf8')
-        message = email.message_from_string(message)
     return message
 
 
