@@ -31,7 +31,7 @@ class GmailApi():
         except errors.HttpError as error:
             pass
 
-    def sendMessage(self, user, message):
+    def send_message(self, user, message):
         """send mail. Please check createMesage
             Keyword arguments:
             user -- select "me"
@@ -44,7 +44,7 @@ class GmailApi():
         except errors.HttpError as error:
             print('An error occurred:s' % error)
 
-    def getMailList(self, user, qu):
+    def get_mail_list(self, user, qu):
         ''' Get mail list.
           qu -- filter
            Keyword arguments:
@@ -69,7 +69,7 @@ class GmailApi():
         except errors.HttpError as error:
             self.reconnect()
 
-    def getMailContent(self, user, i):
+    def get_mail_content(self, user, i):
         """Get mail by mail ID.
                 Keyword arguments:
                 user -- select "me"
@@ -84,7 +84,7 @@ class GmailApi():
         except errors.HttpError as error:
             self.reconnect()
 
-    def doMailAsRead(self, user, i):
+    def do_mail_as_read(self, user, i):
         """make mail opened by mail ID
             Keyword arguments:
             user -- select "me"
@@ -94,7 +94,7 @@ class GmailApi():
         query = {"removeLabelIds": ["UNREAD"]}
         self.service.users().messages().modify(userId=user, id=i, body=query).execute()
 
-    def createMessage(self, sender, to, subject, message_text):
+    def create_message(self, sender, to, subject, message_text):
         """create Message
             Keyword arguments:
             sender -- select "me"
@@ -109,20 +109,20 @@ class GmailApi():
         message['subject'] = subject
         return {'raw': base64.urlsafe_b64encode(message.as_string())}
 
-    def expMailContents(self, user, i, key):
+    def exp_mail_contents(self, user, i, key):
         try:
             content = self.getMailContent(user, i)
             return ([header for header in content["payload"]["headers"] if header["name"] == key])[0]["value"]
         except errors.HttpError as error:
             self.reconnect()
 
-    def getMailFrom(self, user, i):
+    def get_mail_from(self, user, i):
         try:
             return self.expMailContents(user, i, "From")
         except errors.HttpError as error:
             self.reconnect()
 
-    def getMailSubject(self, user, i):
+    def get_mail_subject(self, user, i):
         try:
             return self.expMailContents(user, i, "Subject")
         except errors.HttpError as error:
@@ -191,7 +191,7 @@ def show_chatty_threads(service, user_id='me'):
 
         break
 
-def getMailContent(self, user, i):
+def get_mail_content(self, user, i):
     """get mail by mail ID.
             Keyword arguments:
             user -- select "me"
@@ -240,7 +240,7 @@ def read_message(content)->str:
         print(content)
     return message
 
-def readSnippet(content)->str:
+def read_snippet(content)->str:
     message = None
     if content['snippet']:
         message = content['snippet']
