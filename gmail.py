@@ -207,7 +207,7 @@ def getMailContent(self, user, i):
 
 
 
-def readTitle(content):
+def read_title(content):
     msg = content['payload']
     subject = None
     for header in msg['headers']:
@@ -216,15 +216,18 @@ def readTitle(content):
             break
     return subject
 
-def data_encoder(text):
+def read_from(content):
+    text = content['payload']['headers'][21]["value"]
+    start_index = text.find("<") + 1
+    return text[start_index:-1]
+
+def data_encoder(text)-> str:
     if len(text)>0:
         message = base64.urlsafe_b64decode(text)
         message = str(message, 'utf-8')
-        # message = quopri.decodestring(message).decode('utf8')
     return message
 
-
-def readMessage(content)->str:
+def read_message(content)->str:
     message = None
     if "data" in content['payload']['body']:
         message = content['payload']['body']['data']
@@ -234,9 +237,10 @@ def readMessage(content)->str:
         message = data_encoder(message)
     else:
         print("body has no data.")
+        print(content)
     return message
 
-def readSnippet(content):
+def readSnippet(content)->str:
     message = None
     if content['snippet']:
         message = content['snippet']
